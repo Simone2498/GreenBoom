@@ -52,7 +52,7 @@ TEXTS = {
 # --- DATABASE & DATA MODELS ---
 
 credentials = {
-    "judge1": os.getenv("JUDGE1_PASSWORD"),
+    "PaoloCocco": os.getenv("JUDGE1_PASSWORD"),
     "judge2": os.getenv("JUDGE2_PASSWORD"),
 }
 
