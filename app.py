@@ -53,8 +53,11 @@ TEXTS = {
 # --- DATABASE & DATA MODELS ---
 
 credentials = {
-    "PaoloCocco": os.getenv("JUDGE1_PASSWORD"),
-    "judge2": os.getenv("JUDGE2_PASSWORD"),
+    "Sara": os.getenv("JUDGE1_PASSWORD"),
+    "Federico": os.getenv("JUDGE2_PASSWORD"),
+    "Giorgio": os.getenv("JUDGE3_PASSWORD"),
+    "Debora": os.getenv("JUDGE4_PASSWORD"),
+    "Gianni": os.getenv("JUDGE5_PASSWORD"),
 }
 
 class Evaluation(BaseModel):
