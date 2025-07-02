@@ -1,3 +1,8 @@
 populate_db.py
 analytics.ipynb
 .env
+assets/
+greenevolution_test_db/
+law_agent.py
+preprocessing.ipynb
+__pycache__/
