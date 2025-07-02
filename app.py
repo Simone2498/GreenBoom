@@ -229,89 +229,9 @@ def evaluation_page():
             st.session_state.current_index += 1
             st.rerun()
 
-# --- MAIN APP ---
-st.title(TEXTS["title"])
-
-# Configure the API key (you'll need to set this as an environment variable)
-genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
-
-# Initialize the model - Gemini Flash 2.0
-model = genai.GenerativeModel(
-    model_name="gemini-2.0-flash-exp",
-    system_instruction="""You are an expert environmental consultant specializing in waste management, 
-    environmental regulations, and sustainability practices. You have deep knowledge of Italian and European 
-    environmental laws, waste treatment processes, and green technologies. 
-    
-    Provide accurate, detailed, and practical advice based on current regulations and best practices. 
-    When discussing technical topics, explain them clearly and include relevant regulatory references when applicable."""
-)
-
-def answer_question(question: str, context: Optional[str] = None) -> str:
-    """
-    Answer a question using Gemini Flash 2.0 with the configured system prompt.
-    
-    Args:
-        question (str): The question to answer
-        context (str, optional): Additional context to include with the question
-    
-    Returns:
-        str: The model's response
-    """
-    try:
-        # Prepare the prompt
-        if context:
-            prompt = f"Context: {context}\n\nQuestion: {question}"
-        else:
-            prompt = question
-        
-        # Generate response
-        response = model.generate_content(prompt)
-        return response.text
-    
-    except Exception as e:
-        return f"Error generating response: {str(e)}"
-
-def chat_session():
-    """
-    Start an interactive chat session
-    """
-    print("Environmental Consultant AI - Powered by Gemini Flash 2.0")
-    print("Ask any questions about environmental regulations, waste management, or sustainability.")
-    print("Type 'quit' to exit.\n")
-    
-    chat = model.start_chat(history=[])
-    
-    while True:
-        question = input("You: ").strip()
-        
-        if question.lower() in ['quit', 'exit', 'bye']:
-            print("Goodbye!")
-            break
-        
-        if not question:
-            continue
-        
-        try:
-            response = chat.send_message(question)
-            print(f"AI: {response.text}\n")
-        except Exception as e:
-            print(f"Error: {str(e)}\n")
 
 if __name__ == "__main__":
-    # Example usage
-    print("Testing Gemini Flash 2.0 setup...")
-    
-    # Test with a simple question
-    test_question = "What are the key principles of circular economy in waste management?"
-    response = answer_question(test_question)
-    print(f"Question: {test_question}")
-    print(f"Answer: {response}")
-    
-    # Start interactive chat
-    print("\n" + "="*50)
-    chat_session()
-
-if st.session_state.get('logged_in', False):
-    evaluation_page()
-else:
-    login_page() 
+    if st.session_state.get('logged_in', False):
+        evaluation_page()
+    else:
+        login_page() 
