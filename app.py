@@ -41,6 +41,7 @@ TEXTS = {
     "precisione_label": "Precisione",
     "gradevolezza_label": "Gradevolezza",
     "allucinazione_label": "Rilevata Allucinazione",
+    "esperto_label": "Sono esperto",
     
     "comment_label": "Commento/Motivazione",
     "submit_button": "✅ Invia e Prosegui",
@@ -71,6 +72,7 @@ class Evaluation(BaseModel):
     precisione: int
     gradevolezza: int
     allucinazione: bool
+    esperto: bool
     
     comment: Optional[str] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
@@ -128,6 +130,7 @@ def evaluation_page():
                         **Precisione**: Quanto la risposta riporta correttamente la fonte/normativa? \n\n
                         **Gradevolezza**: Quanto personalmente ti piace la risposta del modello? \n\n
                         **Allucinazione**: Ci sono informazioni totalmente inventate o false? (allucinazione) \n\n
+                        **Sono esperto**: Se la valutazione é espressa dalla persona solitamente operante in materia. \n\n
                         **Commento**: Se trovi allucinazioni o fornisci valutazioni particolarmente positive o negative, spiega il perché. \n\n
                         """)
 
@@ -189,6 +192,7 @@ def evaluation_page():
             precisione = st.slider(TEXTS["precisione_label"], 0, 10, 5)
             gradevolezza = st.slider(TEXTS["gradevolezza_label"], 0, 10, 5)
             allucinazione = st.checkbox(TEXTS["allucinazione_label"])
+            esperto = st.checkbox(TEXTS["esperto_label"])
             comment = st.text_area(TEXTS["comment_label"])
             submit_button = st.form_submit_button(TEXTS["submit_button"])
 
@@ -201,6 +205,7 @@ def evaluation_page():
                     precisione=precisione,
                     gradevolezza=gradevolezza,
                     allucinazione=allucinazione,
+                    esperto=esperto,
                     comment=comment
                 )
                 questions_collection.update_one(
