@@ -31,7 +31,7 @@ TEXTS = {
     "session_eval_complete": "Hai valutato tutti i test per questa sessione.",
     "item_to_eval_header": "Test da Valutare",
     "question_header": "💬 Domanda",
-    "model_answer_header": "🤖 Risposta del Modello",
+    "model_answer_header": "😃 Risposta del Modello",
     "ground_truth_expander": "🟢 Mostra/Nascondi Ground Truth (Riferimento)",
     "your_eval_header": "La Tua Valutazione",
     
@@ -173,14 +173,19 @@ def evaluation_page():
 
     with col1:
         st.subheader(TEXTS["item_to_eval_header"])
-        st.markdown(f"**{TEXTS['question_header']}:**")
-        st.markdown(f"> {html.unescape(question_doc['text'])}")
         
-        st.markdown(f"**{TEXTS['model_answer_header']}:**")
-        st.markdown(f"> {html.unescape(model_answer['answer'])}")
-
-        with st.expander(TEXTS["ground_truth_expander"]):
-            st.info(f"**Ground Truth:**\n\n{question_doc['ground_truth']}")
+        with st.container(border=True):
+            st.markdown(f"**{TEXTS['question_header']}:**")
+            st.markdown(f"> {html.unescape(question_doc['text'])}")
+            
+            st.markdown(f"**{TEXTS['model_answer_header']}:**")
+            
+            unescaped_answer = html.unescape(model_answer['answer'])
+            blocked_answer = "\n".join([f"> {line}" for line in unescaped_answer.split('\n')])
+            st.markdown(blocked_answer)
+    
+            with st.expander(TEXTS["ground_truth_expander"]):
+                st.info(f"**Ground Truth:**\n\n{question_doc['ground_truth']}")
 
     with col2:
         st.subheader(TEXTS["your_eval_header"])
