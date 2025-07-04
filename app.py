@@ -8,6 +8,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 import os
 import google.generativeai as genai
+import html
 
 load_dotenv()
 
@@ -55,7 +56,7 @@ TEXTS = {
 credentials = {
     "Sara": os.getenv("JUDGE1_PASSWORD"),
     "Federico": os.getenv("JUDGE2_PASSWORD"),
-    "Giorgio": os.getenv("JUDGE3_PASSWORD"),
+    "Giorgia": os.getenv("JUDGE3_PASSWORD"),
     "Debora": os.getenv("JUDGE4_PASSWORD"),
     "Gianni": os.getenv("JUDGE5_PASSWORD"),
 }
@@ -170,10 +171,10 @@ def evaluation_page():
     with col1:
         st.subheader(TEXTS["item_to_eval_header"])
         st.markdown(f"**{TEXTS['question_header']}:**")
-        st.markdown(f"> {question_doc['text']}")
+        st.markdown(f"> {html.unescape(question_doc['text'])}")
         
         st.markdown(f"**{TEXTS['model_answer_header']}:**")
-        st.markdown(f"> {model_answer['answer']}")
+        st.markdown(f"> {html.unescape(model_answer['answer'])}")
 
         with st.expander(TEXTS["ground_truth_expander"]):
             st.info(f"**Ground Truth:**\n\n{question_doc['ground_truth']}")
